@@ -19,6 +19,22 @@ const SliderCss = () => {
   const addCard = () => setAmount(prevState => prevState + 1);
   const removeCard = () => setAmount(prevState => prevState ? prevState - 1 : 0);
 
+  // Move on click
+
+  const [startPosition, setStartPosition] = useState(0)
+  
+  const startMove = (event: MouseEvent<HTMLDivElement>) => setStartPosition(event.pageX);
+  
+  const stopMove = (event: MouseEvent<HTMLDivElement>) => {
+    const element = sliderRef.current;
+    const stopPosition = event.pageX;
+    if (element) {
+      const difference = startPosition - stopPosition;
+      const applyDifference = Math.abs(difference) < 290 ? (difference / Math.abs(difference)) * 290 : difference
+      element.scroll({ left: element.scrollLeft + applyDifference, behavior: 'smooth' })
+    }
+  };
+
   return (
     <>
       <div>
@@ -30,7 +46,7 @@ const SliderCss = () => {
           <div className={styles.title}>Mis productos</div>
           <button className={`${styles.radioButton} ${styles.prevButton}`} onClick={handlePrev}>{"<"}</button>
           <button className={`${styles.radioButton} ${styles.nextButton}`} onClick={handleNext}>{">"}</button>  
-          <div className={styles.slider} ref={sliderRef}>
+          <div className={styles.slider} ref={sliderRef} onMouseDown={startMove} onMouseUp={stopMove}>
             {[...Array(amount)].map((e, index) => (
               <Card
                 key={index}

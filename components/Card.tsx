@@ -12,7 +12,7 @@ const Card = ({ title, invested, available }: CardType) => (
     <div className={styles.title}>{title}</div>
     <div className={styles.description}>Invertido: <b>{invested}</b></div>
     <div className={styles.description}>Disponible: <b>{available}</b></div>
-    <div className={styles.button}>Ingressar a la plataforma {">"}</div>
+    <button className={styles.button} onClick={console.log}>Ingressar a la plataforma {">"}</button>
   </div>
 )
 

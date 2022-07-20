@@ -5,6 +5,7 @@
   color: #323232;
   border-radius: 12px;
   margin: 0 4px;
+            user-select: none;
 }
 
 .title {
@@ -21,8 +22,13 @@
 }
 
 .button {
+  width: 100%;
+  text-align: start;
   color: purple;
   margin-top: 16px;
   padding: 12px 0 12px 16px;
+  border: none;
   border-top: 1px solid #323232;
+  background-color: transparent;
+
 }

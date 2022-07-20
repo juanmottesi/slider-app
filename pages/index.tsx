@@ -7,6 +7,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <Link href="/SliderLib">Opcion 1 (lib)</Link>
       <Link href="/SliderCss">Opcion 2 (css)</Link>
+      <Link href="/SliderCss2">Opcion 3 (css con movimiento con el click)</Link>
     </div>
   )
 }
