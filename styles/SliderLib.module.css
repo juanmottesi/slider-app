@@ -1,0 +1,20 @@
+.container {
+  background-color: #ccc;
+  height: 100vh;
+  padding: 8px;
+}
+
+.card {
+  height: 500px;
+  max-width: 800px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 30px;
+  margin: 8px;
+  margin-bottom: 20px;
+}

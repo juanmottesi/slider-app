@@ -1,0 +1,28 @@
+.card {
+  width: 290px;
+  min-width: 290px;
+  background-color: #CCCCCC;
+  color: #323232;
+  border-radius: 12px;
+  margin: 0 4px;
+}
+
+.title {
+  padding: 16px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.description {
+  font-size: 16px;
+  padding: 0 16px 8px 16px;
+  line-height: 24px;
+}
+
+.button {
+  color: purple;
+  margin-top: 16px;
+  padding: 12px 0 12px 16px;
+  border-top: 1px solid #323232;
+}
