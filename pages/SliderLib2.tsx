@@ -1,15 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from "swiper";
+import { Navigation, SwiperOptions } from "swiper";
 import Card from '../components/Card';
 
 import styles from '../styles/SliderLib.module.css';
 
-const SliderLib = () => {
-  const [amount, setAmount] = useState(4)
-
+const SliderLib = ({ spaceBetween = 10, elementWidth = 290 }) => {
+  const [amount, setAmount] = useState(4);
+  const sliderContainerRef = useRef<HTMLDivElement>(null);
+  const [breakpoints, setBreackpoints] = useState<{ [width: number]: SwiperOptions } | {}>({});
   const addCard = () => setAmount(prevState => prevState + 1);
   const removeCard = () => setAmount(prevState => prevState ? prevState - 1 : 0);
+
+  useEffect(() => {
+    const update = () => {
+      if (sliderContainerRef.current) {
+        const slider = window.getComputedStyle(sliderContainerRef.current);
+        const sliderWidth = sliderContainerRef.current.clientWidth;
+        const realSliderWidth = sliderWidth - parseFloat(slider.paddingLeft) - parseFloat(slider.paddingRight);
+        const windowWidth = window.innerWidth;
+        setBreackpoints({ [windowWidth]: {
+          slidesPerView: (realSliderWidth - spaceBetween) / elementWidth,
+        }});
+      }
+    }
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, [sliderContainerRef, spaceBetween, elementWidth])
 
   return (
     <>
@@ -18,49 +36,14 @@ const SliderLib = () => {
         <button onClick={removeCard}>sacar card</button>
       </div>
       <div className={styles.container}>
-        <div className={styles.card}>
+        <div ref={sliderContainerRef} className={styles.card}>
           <div className={styles.title}>Mis productos</div>
-          <Swiper modules={[Navigation]}
+          <Swiper
+            key={Object.keys(breakpoints)?.[0]}
+            modules={[Navigation]}
             navigation
-            slidesPerView={1.05}
-            spaceBetween={5}
-            breakpoints={{
-              360: {
-                slidesPerView: 1.1,
-                spaceBetween: 10,
-              },
-              400: {
-                slidesPerView: 1.2,
-              },
-              450: {
-                slidesPerView: 1.35,
-              },
-              500: {
-                slidesPerView: 1.55,
-              },
-              550: {
-                slidesPerView: 1.7,
-              },
-              600: {
-                slidesPerView: 1.9,
-              },
-              650: {
-                slidesPerView: 2.05,
-                spaceBetween:5,
-              },
-              700: {
-                slidesPerView: 2.2,
-                spaceBetween: 10,
-              },
-              750: {
-                slidesPerView: 2.3,
-                spaceBetween: 5,
-              },
-              800: {
-                slidesPerView: 2.5,
-                spaceBetween: 10,
-              },
-            }}
+            spaceBetween={spaceBetween}
+            breakpoints={breakpoints}
             >
             {[...Array(amount)].map((e, index) => (
               <SwiperSlide key={index}>
